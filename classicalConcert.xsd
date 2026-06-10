@@ -51,7 +51,7 @@
 
   <xs:import
     namespace="http://id.loc.gov/ontologies/bibframe/"
-    schemaLocation="https://github.com/jiwon2kim-pixel/classical-concert-schema/blob/main/bibframe-local.xsd"/>
+    schemaLocation="https://jiwon2kim-pixel.github.io/classical-concert-schema/bibframe-local.xsd"/>
 
 
   <!-- Root Element: classicalConcert (#0)

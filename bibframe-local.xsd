@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bibframe-local.xsd
+     A local XSD definition for BIBFRAME elements used in classicalConcert.xsd.
+
+     BIBFRAME is an OWL/RDF ontology and does not publish an XSD file. 
+     This file defines only the three bf elements used in the classicalConcert schema, 
+     retaining their official bf namespace URI (http://id.loc.gov/ontologies/bibframe/).
+
+     Elements defined:
+       bf:identifiedBy — Identifier wrapper (Property)
+       bf:OpusNumber — Opus number identifier (Class)
+       bf:ThematicCatalogNumber — Thematic catalogue number (Class) -->
+
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://id.loc.gov/ontologies/bibframe/"
+  xmlns:bf="http://id.loc.gov/ontologies/bibframe/"
+  elementFormDefault="qualified">
+
+
+  <!-- bf:identifiedBy (#10) — Identifier Wrapper
+       URI: http://id.loc.gov/ontologies/bibframe/identifiedBy
+       Type of Term: Property
+       Cardinality: Optional within work / Non-repeatable
+       Definition: A property linking a musical work to its identifier instance. 
+       Contains either bf:OpusNumber (#10-1) or bf:ThematicCatalogNumber (#10-2). -->
+  <xs:element name="identifiedBy" type="bf:identifiedByType"/>
+
+  <xs:complexType name="identifiedByType">
+    <xs:choice>
+
+      <!-- bf:OpusNumber (#10-1) — Opus Number
+           URI: http://id.loc.gov/ontologies/bibframe/OpusNumber
+           Type of Term: Class (Identifier)
+           Definition: The opus number assigned to a musical work by the composer or publisher.
+           Use when: the work carries an opus designation.
+           Example: Op. 18 -->
+      <xs:element name="OpusNumber" type="xs:string"/>
+
+      <!-- bf:ThematicCatalogNumber (#10-2) — Catalog Number
+           URI: http://id.loc.gov/ontologies/bibframe/ThematicCatalogNumber
+           Type of Term: Class (Identifier)
+           Definition: A catalogue number assigned to a musical work in a standard thematic index, used when no opus number exists.
+           The catalogue prefix must be included.
+           Use when: no opus number exists.
+           Examples: K. 550, BWV 1007, FWV 48, WWV 32 -->
+      <xs:element name="ThematicCatalogNumber" type="xs:string"/>
+
+    </xs:choice>
+  </xs:complexType>
+
+
+</xs:schema>

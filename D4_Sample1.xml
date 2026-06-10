@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classicalConcert
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:mods="http://www.loc.gov/mods/v3"
+  xmlns:bf="http://id.loc.gov/ontologies/bibframe/">
+
+  <!-- 1. Concert Title -->
+  <dcterms:title>Anna Vinnitskaya | Orchestre de Paris | Klaus Mäkelä</dcterms:title>
+
+  <!-- 3. Performance Date -->
+  <dcterms:date>2026-03-19</dcterms:date>
+
+  <!-- 4. Location -->
+  <dcterms:spatial displayLabel="city">Köln, Germany</dcterms:spatial>
+  <dcterms:spatial displayLabel="venue">Kölner Philharmonie</dcterms:spatial>
+
+  <!-- 7. Performer -->
+  <mods:name type="personal">
+    <mods:namePart>Mäkelä, Klaus</mods:namePart>
+    <mods:role>
+      <mods:roleTerm authority="marcrelator" type="text">conductor</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:name type="personal">
+    <mods:namePart>Vinnitskaya, Anna</mods:namePart>
+    <mods:role>
+      <mods:roleTerm authority="marcrelator" type="text">soloist</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+
+  <!-- 8. Ensemble -->
+  <mods:name type="corporate">
+    <mods:namePart>Orchestre de Paris</mods:namePart>
+    <mods:role>
+      <mods:roleTerm authority="marcrelator" type="text">performer</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+
+  <!-- 11. Description -->
+  <dcterms:description>
+    The concert presents the sound world of César Franck and Sergei Rachmaninoff.
+    Klaus Mäkelä conducts the Orchestre de Paris, featuring pianist Anna Vinnitskaya in Rachmaninoff's Second Piano Concerto.
+  </dcterms:description>
+
+  <!-- 12. Related Resource -->
+  <dcterms:relation displayLabel="related">
+    https://www.koelner-philharmonie.de/media/filer_public/0a/33/0a33e8e0-2cf1-444c-bf63-bbc067be756f/2026-03-19.pdf
+  </dcterms:relation>
+
+  <!-- Work-level elements -->
+  <!-- 13. work wrapper -->
+  <work>
+    <!-- 2. Work Title -->
+    <dcterms:alternative>Rachmaninoff: Piano Concerto No. 2 in C minor, Op. 18</dcterms:alternative>
+    <!-- 5. Genre / Form -->
+    <mods:genre authority="lcgft">Concertos</mods:genre>
+    <!-- 6. Composer -->
+    <dcterms:creator>Rachmaninoff, Sergei</dcterms:creator>
+    <!-- 9. Work URI -->
+    <dcterms:identifier>http://viaf.org/viaf/177811018</dcterms:identifier>
+    <!-- 10. Identifier / 10-1. Opus Number -->
+    <bf:identifiedBy>
+      <bf:OpusNumber>Op. 18</bf:OpusNumber>
+    </bf:identifiedBy>
+  </work>
+
+  <work>
+    <!-- 2. Work Title -->
+    <dcterms:alternative>Franck: Symphony in D minor, FWV 48</dcterms:alternative>
+    <!-- 5. Genre / Form -->
+    <mods:genre authority="lcgft">Symphonies</mods:genre>
+    <!-- 6. Composer -->
+    <dcterms:creator>Franck, César</dcterms:creator>
+    <!-- 9. Work URI -->
+    <dcterms:identifier>http://viaf.org/viaf/175588047</dcterms:identifier>
+    <!-- 10. Identifier / 10-2. Catalog Number -->
+    <bf:identifiedBy>
+      <bf:ThematicCatalogNumber>FWV 48</bf:ThematicCatalogNumber>
+    </bf:identifiedBy>
+  </work>
+
+</classicalConcert>

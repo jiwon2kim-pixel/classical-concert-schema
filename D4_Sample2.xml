@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classicalConcert
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:mods="http://www.loc.gov/mods/v3"
+  xmlns:bf="http://id.loc.gov/ontologies/bibframe/">
+
+  <!-- 1. Concert Title -->
+  <dcterms:title>Jakub Hrůša &amp; Bamberger Symphoniker</dcterms:title>
+
+  <!-- 3. Performance Date -->
+  <dcterms:date>2025-06-01</dcterms:date>
+
+  <!-- 4. Location -->
+  <dcterms:spatial displayLabel="city">Seoul, Republic of Korea</dcterms:spatial>
+  <dcterms:spatial displayLabel="venue">Seoul Arts Center Concert Hall</dcterms:spatial>
+
+  <!-- 7. Performer -->
+  <mods:name type="personal">
+    <mods:namePart>Hrůša, Jakub</mods:namePart>
+    <mods:role>
+      <mods:roleTerm authority="marcrelator" type="text">conductor</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:name type="personal">
+    <mods:namePart>Kim, Bomsori</mods:namePart>
+    <mods:role>
+      <mods:roleTerm authority="marcrelator" type="text">soloist</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+
+  <!-- 8. Ensemble -->
+  <mods:name type="corporate">
+    <mods:namePart>Bamberger Symphoniker</mods:namePart>
+    <mods:role>
+      <mods:roleTerm authority="marcrelator" type="text">performer</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+
+  <!-- 11. Description -->
+  <dcterms:description>
+    The Bamberger Symphoniker returns to Korea after two years, with Chief Conductor Jakub Hrůša and violin soloist Bomsori Kim.
+    The program presents works representing Czech and German musical coexistence, from Wagner's early opera overture to Bruch's beloved violin concerto and Beethoven's festive Seventh Symphony.
+  </dcterms:description>
+
+  <!-- 12. Related Resource -->
+  <dcterms:relation displayLabel="recording">
+    https://www.stage-plus.com/video/vod_concert_APNM8GRFDPHMASJKBSS3IC8?utm_source=share
+  </dcterms:relation>
+
+  <!-- Work-level elements -->
+  <!-- 13. work wrapper -->
+  <work>
+    <!-- 2. Work Title -->
+    <dcterms:alternative>Wagner: Die Feen Overture, WWV 32</dcterms:alternative>
+    <!-- 5. Genre / Form -->
+    <mods:genre authority="lcgft">Overtures (Orchestral music)</mods:genre>
+    <!-- 6. Composer -->
+    <dcterms:creator>Wagner, Richard</dcterms:creator>
+    <!-- 9. Work URI -->
+    <dcterms:identifier>http://viaf.org/viaf/175038680</dcterms:identifier>
+    <!-- 10. Identifier / 10-2. Catalog Number -->
+    <bf:identifiedBy>
+      <bf:ThematicCatalogNumber>WWV 32</bf:ThematicCatalogNumber>
+    </bf:identifiedBy>
+  </work>
+
+  <work>
+    <!-- 2. Work Title -->
+    <dcterms:alternative>Bruch: Violin Concerto No. 1 in G minor, Op. 26</dcterms:alternative>
+    <!-- 5. Genre / Form -->
+    <mods:genre authority="lcgft">Concertos</mods:genre>
+    <!-- 6. Composer -->
+    <dcterms:creator>Bruch, Max</dcterms:creator>
+    <!-- 9. Work URI -->
+    <dcterms:identifier>http://viaf.org/viaf/184397264</dcterms:identifier>
+    <!-- 10. Identifier / 10-1. Opus Number -->
+    <bf:identifiedBy>
+      <bf:OpusNumber>Op. 26</bf:OpusNumber>
+    </bf:identifiedBy>
+  </work>
+
+  <work>
+    <!-- 2. Work Title -->
+    <dcterms:alternative>Beethoven: Symphony No. 7 in A major, Op. 92</dcterms:alternative>
+    <!-- 5. Genre / Form -->
+    <mods:genre authority="lcgft">Symphonies</mods:genre>
+    <!-- 6. Composer -->
+    <dcterms:creator>Beethoven, Ludwig van</dcterms:creator>
+    <!-- 9. Work URI -->
+    <dcterms:identifier>http://viaf.org/viaf/180635419</dcterms:identifier>
+    <!-- 10. Identifier / 10-1. Opus Number -->
+    <bf:identifiedBy>
+      <bf:OpusNumber>Op. 92</bf:OpusNumber>
+    </bf:identifiedBy>
+  </work>
+
+</classicalConcert>

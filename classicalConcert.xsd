@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================
+     A Metadata Vocabulary for Classical Concert Performance Records
+     2023315014 김지원
+
+     Namespaces used:
+       dcterms:  Dublin Core Terms    http://purl.org/dc/terms/
+       mods:     MODS 3.8             http://www.loc.gov/mods/v3
+       bf:       BIBFRAME 3.0         http://id.loc.gov/ontologies/bibframe/
+
+     Notes on bf:identifiedBy / bf:OpusNumber / bf:ThematicCatalogNumber:
+       BIBFRAME is an OWL/RDF ontology and does not publish an XSD file.
+       A local XSD file (bibframe-local.xsd) is provided alongside this schema, 
+       defining only the bf elements used here while retaining the official bf namespace URI. 
+       bf:identifiedBy is imported from that file and used with ref= as with other external elements.
+    
+     AI Assistance Note (using Claude):
+      - Requested xs:import for dcterms and mods using published XSD files, 
+        and for bf using a locally created bibframe-local.xsd 
+        (since BIBFRAME is an OWL/RDF ontology with no official XSD)
+      - Asked how to define a local complex type to wrap work-level elements
+      - Requested xs:annotation / xs:documentation for every element from data dictionary
+      - Added xs:documentation notes on XSD 1.0 design limits
+      - Verified alignment between the Draft 4 data dictionary and the XSD file structure
+      - Added dcterms:identifier (#9) as Work URI element to workType sequence;
+        renumbered bf:identifiedBy, bf:OpusNumber, bf:ThematicCatalogNumber, dcterms:description, dcterms:relation, and work wrapper
+      - Updated all xs:documentation comments to reflect revised numbering
+    ============================================================ -->
+
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:mods="http://www.loc.gov/mods/v3"
+  xmlns:bf="http://id.loc.gov/ontologies/bibframe/"
+  targetNamespace="http://example.org/classicalConcert"
+  xmlns="http://example.org/classicalConcert"
+  elementFormDefault="qualified">
+
+  <!-- xs:import: External namespaces used in this schema.
+       dcterms imports from its published XSD file.
+       mods is imported for ref= use of mods:name, mods:genre, etc.
+       bf imports from bibframe-local.xsd, a locally created XSD
+       since BIBFRAME does not publish an official XSD file. -->
+  <xs:import
+    namespace="http://purl.org/dc/terms/"
+    schemaLocation="https://www.dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd"/>
+
+  <xs:import
+    namespace="http://www.loc.gov/mods/v3"
+    schemaLocation="https://www.loc.gov/standards/mods/v3/mods-3-8.xsd"/>
+
+  <xs:import
+    namespace="http://id.loc.gov/ontologies/bibframe/"
+    schemaLocation="bibframe-local.xsd"/>
+
+
+  <!-- Root Element: classicalConcert (#0)
+       A locally defined root element.
+       Contains all concert-level elements directly, and work-level elements via the local <work> wrapper element (#13). -->
+  <xs:element name="classicalConcert">
+    <xs:annotation>
+      <xs:documentation>
+        The root element of a single concert performance record.
+        All concert-level and work-level elements are contained within this element.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+
+        <!-- #1 dcterms:title — Concert Title
+             Mandatory / Non-repeatable -->
+        <xs:element ref="dcterms:title"
+                    minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>
+              The official title of the concert performance event as a whole.
+              If no official title exists, a descriptive title may be assigned.
+              Example: Anna Vinnitskaya | Orchestre de Paris | Klaus Mäkelä
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- #3 dcterms:date — Performance Date
+             Mandatory / Non-repeatable
+             Values must be expressed in ISO 8601 format (YYYY-MM-DD) -->
+        <xs:element ref="dcterms:date"
+                    minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>
+              The date on which the concert performance took place.
+              Values must be expressed in ISO 8601 format (YYYY-MM-DD).
+              Example: 2026-03-19
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- #4 dcterms:spatial — Location
+             Mandatory / Repeatable exactly twice (city + venue)
+             @displayLabel is borrowed from MODS as a local extension attribute to differentiate city and venue values. -->
+        <xs:element ref="dcterms:spatial"
+                    minOccurs="2" maxOccurs="2">
+          <xs:annotation>
+            <xs:documentation>
+              The geographic location and specific venue of the concert.
+              Repeated exactly twice: once for city/country with @displayLabel="city",
+              and once for venue name with @displayLabel="venue".
+              @displayLabel is borrowed from MODS as a local extension attribute.
+              Recommended controlled vocabulary: Getty TGN or LCNAF.
+              Note (XSD 1.0 design limit): minOccurs="2" maxOccurs="2" enforces two occurrences,
+              but XSD 1.0 cannot enforce that one instance carries @displayLabel="city" and the other @displayLabel="venue".
+              This constraint must be observed by the record creator.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- #7 mods:name [@type='personal'] — Performer
+             #8 mods:name [@type='corporate'] — Ensemble
+             Mandatory / Repeatable
+             Both use mods:name, distinguished by @type:
+               @type="personal"  → individual performer (#7)
+               @type="corporate" → performing group (#8)
+             Sub-elements: mods:namePart, mods:role, mods:roleTerm
+             mods:roleTerm values (MARC Relator): conductor, soloist, performer -->
+        <xs:element ref="mods:name"
+                    minOccurs="1" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>
+              A performer (#7, @type="personal") or ensemble (#8, @type="corporate") that participated in the concert.
+              Sub-elements: mods:namePart (name), mods:role (wrapper), mods:roleTerm (role term from MARC Relator vocabulary)
+              mods:roleTerm controlled values: conductor, soloist, performer (http://id.loc.gov/vocabulary/relators)
+              Note: xs:enumeration cannot be applied to mods:roleTerm via ref=
+              because the element type is already defined in the imported MODS schema.
+              Controlled values are enforced at the documentation level.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- #11 dcterms:description — Description
+             Optional / Non-repeatable -->
+        <xs:element ref="dcterms:description"
+                    minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>
+              A free-text account of the concert performance, including program notes or performance context.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- #12 dcterms:relation — Related Resource
+             Optional / Repeatable
+             @displayLabel="recording" for audio/video links;
+             @displayLabel="related" for program books, posters, etc. -->
+        <xs:element ref="dcterms:relation"
+                    minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>
+              A reference to an external resource associated with the concert.
+              Use @displayLabel="recording" for audio/video links (URI required),
+              or @displayLabel="related" for program books, posters, or reviews (URI preferred).
+              @displayLabel is borrowed from MODS as a local extension.
+              Note: xs:enumeration cannot be applied to @displayLabel via ref=
+              because the element type is already defined in the imported dcterms schema.
+              Controlled values (recording, related) are enforced at the documentation level.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- #13 work — Work wrapper (local element)
+             Mandatory / Repeatable (once per work performed) -->
+        <xs:element name="work"
+                    type="workType"
+                    minOccurs="1" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>
+              A local wrapper element grouping all metadata for an individual musical work performed at the concert.
+              Contains: dcterms:alternative (#2), mods:genre (#5), dcterms:creator (#6),
+                        dcterms:identifier (#9), bf:identifiedBy (#10).
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+  <!-- workType: Complex type for the local <work> wrapper (#13)
+       Groups all work-level metadata for an individual musical work. -->
+  <xs:complexType name="workType">
+    <xs:sequence>
+
+      <!-- #2 dcterms:alternative — Work Title
+           Mandatory within work / Non-repeatable
+           Format: [Composer]: [Genre] (No.[n]) (in [Key]), [Opus/Cat. No.]
+           No. and Key may be omitted if not applicable. -->
+      <xs:element ref="dcterms:alternative"
+                  minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            The full title of an individual musical work performed.
+            Format: [Composer]: [Genre] (No.[n]) (in [Key]), [Opus/Cat. No.]
+            Number and Key may be omitted if not applicable.
+            Example: Rachmaninoff: Piano Concerto No. 2 in C minor, Op. 18
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- #5 mods:genre — Genre / Form
+           Mandatory within work / Non-repeatable
+           Recommended controlled vocabulary: LCGFT (http://id.loc.gov/authorities/genreForms)
+           Common values: Symphonies, Concertos, String quartets, Piano music, Chamber music, Overtures (Orchestral music), Operas, Choral music, etc. -->
+      <xs:element ref="mods:genre"
+                  minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            The musical genre or form of an individual work performed.
+            Recommended controlled vocabulary: LCGFT (http://id.loc.gov/authorities/genreForms)
+            Common values: Symphonies, Concertos, Overtures (Orchestral music), String quartets,
+            Piano music, Chamber music, Operas, Choral music, Song cycles, Suites (Orchestra), etc.
+            Note: xs:enumeration is not applied here because LCGFT is a large external vocabulary.
+            Per schema design convention, the vocabulary name is indicated via @authority="lcgft" in XML instance records instead.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- #6 dcterms:creator — Composer
+           Mandatory within work / Non-repeatable -->
+      <xs:element ref="dcterms:creator"
+                  minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            The person who composed the musical work performed.
+            Distinct from Performer (#7): the composer created the work, not the performance.
+            Recommended controlled vocabulary: LCNAF or VIAF.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- #9 dcterms:identifier — Work URI
+           Optional within work / Non-repeatable -->
+      <xs:element ref="dcterms:identifier"
+                  minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            A URI that identifies the musical work in an external authority or catalog.
+            Enables cross-record linking of the same work performed at different concerts.
+            Provides a globally unique, machine-actionable identifier for the musical work.
+            Recommended sources: VIAF (https://viaf.org)
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!-- #10    bf:identifiedBy — Identifier Wrapper
+           #10-1  bf:OpusNumber — Opus Number
+           #10-2  bf:ThematicCatalogNumber — Catalog Number
+           Optional within work / Non-repeatable
+           Defined in bibframe-local.xsd and imported above.
+           Contains one of bf:OpusNumber (#10-1) or bf:ThematicCatalogNumber (#10-2). -->
+      <xs:element ref="bf:identifiedBy"
+                  minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            A property linking a musical work to its identifier.
+            Contains either bf:OpusNumber (#10-1) for works with an opus designation (e.g., Op. 18),
+            or bf:ThematicCatalogNumber (#10-2) for works identified by thematic catalogue number (e.g., K. 550, BWV 1007).
+            BIBFRAME does not publish an XSD file; bf elements are defined in the accompanying bibframe-local.xsd.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

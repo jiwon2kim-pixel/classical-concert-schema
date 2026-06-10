@@ -2,7 +2,9 @@
 <classicalConcert
   xmlns:dcterms="http://purl.org/dc/terms/"
   xmlns:mods="http://www.loc.gov/mods/v3"
-  xmlns:bf="http://id.loc.gov/ontologies/bibframe/">
+  xmlns:bf="http://id.loc.gov/ontologies/bibframe/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://jiwon2kim-pixel.github.io/classical-concert-schema/classicalConcert.xsd">
 
   <!-- 1. Concert Title -->
   <dcterms:title>Anna Vinnitskaya | Orchestre de Paris | Klaus Mäkelä</dcterms:title>

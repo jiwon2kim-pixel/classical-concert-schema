@@ -3,6 +3,22 @@
      A Metadata Vocabulary for Classical Concert Performance Records
      2023315014 김지원
 
+     Schema Design Intent:
+       Classical music concerts are ephemeral events that existing metadata systems struggle to describe adequately. 
+       Traditional library cataloging was usually designed for scores and recordings, not live performance events, 
+       and general-purpose schemas lack the specificity that classical music requires.
+
+       A single concert involves multiple distinct works, each with its own composer, work number, 
+       performed by conductors, soloists, and ensembles whose roles must be clearly distinguished. 
+       These characteristics are unique to classical music and motivated the design of a domain-specific schema.
+
+       The schema separates Concert-level elements (title, date, location, performers)
+`      from Work-level elements (work title, genre, composer, identifiers), grouped within a local <work> wrapper, 
+       reflecting the real-world structure of a concert where one event contains multiple compositionally distinct works.
+
+       The intended users are general audiences seeking concert records and recordings, 
+       librarians and archivists preserving performance history, and researchers conducting repertoire or performance studies.
+
      Namespaces used:
        dcterms:  Dublin Core Terms    http://purl.org/dc/terms/
        mods:     MODS 3.8             http://www.loc.gov/mods/v3
